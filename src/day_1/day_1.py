@@ -1,3 +1,5 @@
+import pandas as pd
+
 """
 # Take two lists, a and b:
     a = [3,4,2,1,3,3]
@@ -20,4 +22,18 @@ def find_distance(a, b):
 
         distance += max(a[i] - b[i], b[i] - a[i])
 
+    print(distance)
     return distance
+
+# Create a dataframe from the input data
+df = pd.read_csv('data/day_1/day_1_input.csv', sep='\s+', header=None, names=['a', 'b'])
+
+# Create a list from each column of the dataframe
+a = df['a'].tolist()
+b = df['b'].tolist()
+
+# Sort the lists and pass them to find_distance()
+a.sort()
+b.sort()
+
+find_distance(a,b)

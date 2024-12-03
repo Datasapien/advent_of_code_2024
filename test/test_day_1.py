@@ -1,5 +1,5 @@
 import pytest
-from src.day_1 import find_distance
+from src.day_1.day_1 import find_distance
 
 def test_returns_int():
     #arrange
