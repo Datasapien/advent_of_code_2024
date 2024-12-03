@@ -6,7 +6,7 @@ I've chosen to use Python to keep my skills sharp! Here's to a very merry Christ
 1. Clone repo
 2. Create virtual environment (python -m venv venv)
 3. Add venv to .gitignore
-4. Export python path (export PYTHONPATH=$(pwd))
-5. Install pytest to venv using 'pip install pytest'
-6. Install pandas to venv using 'pip install pandas'
+4. Install pytest to venv using 'pip install pytest'
+5. Install pandas to venv using 'pip install pandas'
+6. Update pythonpath in pytest.ini to test code in different files
 7. Run tests using 'pytest test/test_day_x.py -vvvrP'

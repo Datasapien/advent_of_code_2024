@@ -1,4 +1,4 @@
-from .day1_create_lists import create_lists
+from day1_create_lists import create_lists
 
 """
 # Take two lists, a and b:
