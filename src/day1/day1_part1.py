@@ -19,10 +19,6 @@ def create_lists():
     a = df['a'].tolist()
     b = df['b'].tolist()
 
-    # Sort the lists and pass them to find_distance()
-    a.sort()
-    b.sort()
-
     return [a,b]
 
 def find_distance():
@@ -31,6 +27,10 @@ def find_distance():
 
     a = lists[0]
     b = lists[1]
+
+    # Sort the lists and pass them to find_distance()
+    a.sort()
+    b.sort()
 
     distance = 0
 

@@ -1,5 +1,5 @@
 import pytest
-from src.day_2.day_2 import func
+from src.day1.day1_part2 import func
 
-def test():
+def test_returns_int():
     pass
