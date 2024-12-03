@@ -1,4 +1,4 @@
-import pandas as pd
+from .day1_create_lists import create_lists
 
 """
 # Take two lists, a and b:
@@ -10,16 +10,6 @@ import pandas as pd
     distance = [2,1,0,1,2,5] = 11
 # Real input comes from .txt file with two columns of 5 digit numbers separated by 3 whitespaces
 """
-
-def create_lists():
-# Create a dataframe from the input data
-    df = pd.read_csv('data/day1/day1_input.csv', sep='\s+', header=None, names=['a', 'b'])
-
-    # Create a list from each column of the dataframe
-    a = df['a'].tolist()
-    b = df['b'].tolist()
-
-    return [a,b]
 
 def find_distance():
     

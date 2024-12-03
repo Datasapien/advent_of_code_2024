@@ -1,4 +1,4 @@
-import pandas as pd
+from day1_create_lists import create_lists
 
 """
 # Take two lists, a and b:
@@ -14,20 +14,12 @@ import pandas as pd
     Total similarity score = 31
 """
 
-def create_lists():
-# Create a dataframe from the input data
-    df = pd.read_csv('data/day1/day1_input.csv', sep='\s+', header=None, names=['a', 'b'])
-
-    # Create a list from each column of the dataframe
-    a = df['a'].tolist()
-    b = df['b'].tolist()
-
-    # Sort the lists and pass them to find_distance()
-    a.sort()
-    b.sort()
-
-    return [a,b]
-
 def similarity_score():
+
+    create_lists()
     
     return 0
+
+# Only call the function if this file is executed directly
+if __name__ == "__main__":
+    similarity_score()
