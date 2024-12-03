@@ -16,9 +16,25 @@ from day1_create_lists import create_lists
 
 def similarity_score():
 
-    create_lists()
-    
-    return 0
+    lists = create_lists()
+
+    a = lists[0]
+    b = lists[1]
+
+    score_dict = {}    
+
+    for num in a:
+        if num in b:
+            score_dict.setdefault(num,0)
+            score_dict[num] += b.count(num)
+
+    score = 0
+
+    for key, value in score_dict.items():
+        score += key * value
+
+    print(score)
+    return score
 
 # Only call the function if this file is executed directly
 if __name__ == "__main__":
