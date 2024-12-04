@@ -1,4 +1,4 @@
-from day1_create_lists import create_lists
+import pandas as pd
 
 """
 # Take two lists, a and b:
@@ -13,6 +13,15 @@ from day1_create_lists import create_lists
     ...
     Total similarity score = 31
 """
+def create_lists():
+    # Create a dataframe from the input data
+    df = pd.read_csv('data/day1_input.csv', sep='\s+', header=None, names=['a', 'b'])
+
+    # Create a list from each column of the dataframe
+    a = df['a'].tolist()
+    b = df['b'].tolist()
+
+    return [a,b]
 
 def similarity_score():
 
@@ -36,6 +45,4 @@ def similarity_score():
     print(score)
     return score
 
-# Only call the function if this file is executed directly
-if __name__ == "__main__":
-    similarity_score()
+similarity_score()

@@ -25,10 +25,35 @@
 # Need to output the number of SAFE reports
 """
 
-def safe_reports():    
+def create_reports():
 
-    return 0
+    csv_file = "data/test_input.csv"
 
-# Only call the function if this file is executed directly
-if __name__ == "__main__":
-    safe_reports()
+    with open(csv_file, 'r') as file:
+        rows = [list(map(int, line.strip().split())) for line in file]
+
+    print(rows)
+    
+    return rows
+
+
+def safe_reports():
+
+    reports = create_reports()
+
+    safe_count = 0
+
+    for report in reports:
+
+        is_increasing = all(report[i] <= report[i + 1] for i in range(len(report) - 1))
+        is_decreasing = all(report[i] >= report[i + 1] for i in range(len(report) - 1))
+        valid_differences = all(1 <= abs(report[i] - report[i + 1]) <= 3 for i in range(len(report) - 1))
+
+        if (is_increasing or is_decreasing) and valid_differences:
+            safe_count += 1
+
+    print(safe_count)
+
+    return safe_count
+
+safe_reports()

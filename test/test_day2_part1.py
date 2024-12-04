@@ -2,11 +2,77 @@ import pytest
 from src.day2.day2_part1 import safe_reports
 from unittest.mock import patch
 
-@patch("src.day1.day1_create_lists.create_lists")
-def test_returns_int(mock_create_lists):
+@patch("src.day2.day2_part1.create_reports")
+def test_returns_int(mock_create_reports):
 
-    mock_create_lists.return_value = [[3,4,2,1,3,3],[4,3,5,3,9,3]]
+    mock_create_reports.return_value = [[7, 6, 4, 2, 1]]
 
     result = safe_reports()
 
     assert type(result) == int
+
+@patch("src.day2.day2_part1.create_reports")
+def test_for_single_ascending_safe_report(mock_create_reports):
+
+    mock_create_reports.return_value = [[1, 3, 6, 7, 9]]
+
+    result = safe_reports()
+
+    expected = 1
+
+    assert result == expected
+
+@patch("src.day2.day2_part1.create_reports")
+def test_for_two_ascending_safe_reports(mock_create_reports):
+
+    mock_create_reports.return_value = [[1, 3, 6, 7, 9],[1, 3, 6, 7, 9]]
+
+    result = safe_reports()
+
+    expected = 2
+
+    assert result == expected
+
+@patch("src.day2.day2_part1.create_reports")
+def test_for_one_ascending_safe_report(mock_create_reports):
+
+    mock_create_reports.return_value = [[1, 3, 6, 7, 9],[1, 2, 7, 8, 9]]
+
+    result = safe_reports()
+
+    expected = 1
+
+    assert result == expected
+
+@patch("src.day2.day2_part1.create_reports")
+def test_for_single_descending_safe_report(mock_create_reports):
+
+    mock_create_reports.return_value = [[7, 6, 4, 2, 1]]
+
+    result = safe_reports()
+
+    expected = 1
+
+    assert result == expected
+
+@patch("src.day2.day2_part1.create_reports")
+def test_for_two_descending_safe_reports(mock_create_reports):
+
+    mock_create_reports.return_value = [[7, 6, 4, 2, 1],[7, 6, 4, 2, 1]]
+
+    result = safe_reports()
+
+    expected = 2
+
+    assert result == expected
+
+@patch("src.day2.day2_part1.create_reports")
+def test_for_one_descending_safe_report(mock_create_reports):
+
+    mock_create_reports.return_value = [[7, 6, 4, 2, 1],[10, 6, 4, 2, 1]]
+
+    result = safe_reports()
+
+    expected = 1
+
+    assert result == expected
