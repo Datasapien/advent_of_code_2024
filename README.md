@@ -8,5 +8,4 @@ I've chosen to use Python to keep my skills sharp! Here's to a very merry Christ
 3. Add venv to .gitignore
 4. Install pytest to venv using 'pip install pytest'
 5. Install pandas to venv using 'pip install pandas'
-6. Update pythonpath in pytest.ini to test code in different files
-7. Run tests using 'pytest test/test_day_x.py -vvvrP'
+6. Run tests using 'pytest test/test_day_x.py -vvvrP'
