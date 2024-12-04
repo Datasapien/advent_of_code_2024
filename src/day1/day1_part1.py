@@ -1,21 +1,19 @@
 import pandas as pd
 
 """
-# Take two lists, a and b:
+Take two lists, a and b:
     a = [3,4,2,1,3,3]
     b = [4,3,5,3,9,3]
-# Pair up the numbers and find out how far apart they each are
+air up the numbers and find out how far apart they each are
     sorted_a = [1,2,3,3,3,4]
     sorted_b = [3,3,3,4,5,9]
     distance = [2,1,0,1,2,5] = 11
-# Real input comes from .txt file with two columns of 5 digit numbers separated by 3 whitespaces
+Real input comes from .txt file with two columns of 5 digit numbers separated by 3 whitespaces
 """
 
 def create_lists():
-    # Create a dataframe from the input data
     df = pd.read_csv('data/day1_input.csv', sep='\s+', header=None, names=['a', 'b'])
 
-    # Create a list from each column of the dataframe
     a = df['a'].tolist()
     b = df['b'].tolist()
 
@@ -28,7 +26,6 @@ def find_distance():
     a = lists[0]
     b = lists[1]
 
-    # Sort the lists and pass them to find_distance()
     a.sort()
     b.sort()
 

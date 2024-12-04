@@ -1,7 +1,7 @@
 """
-# Same rules as part1 apply, but an additional rule is created:
+Same rules as part1 apply, but an additional rule is created:
 
-# If a report would be deemed UNSAFE due to a SINGLE digit, it is deemed to be SAFE
+If a report would be deemed UNSAFE due to a SINGLE digit, it is deemed to be SAFE
 
 7 6 4 2 1: Safe without removing any level.
 1 2 7 8 9: Unsafe regardless of which level is removed.
