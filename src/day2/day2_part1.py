@@ -32,8 +32,6 @@ def create_reports():
     with open(csv_file, 'r') as file:
         rows = [list(map(int, line.strip().split())) for line in file]
 
-    print(rows)
-    
     return rows
 
 
