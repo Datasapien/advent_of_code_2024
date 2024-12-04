@@ -1,4 +1,3 @@
-from pprint import pprint
 import csv
 import re
 
@@ -27,9 +26,7 @@ Calculate the total from day3_input.csv
 
 def create_memory():
 
-    # Read day3_input.csv and output it
-
-    csv_file = 'data/test_input.csv'
+    csv_file = 'data/day3_input.csv'
 
     with open(csv_file, 'r') as file:
         string = csv.reader(file, delimiter = ' ')
@@ -41,7 +38,6 @@ def create_memory():
             for item in row:
                 corrupted_memory.append(item)
 
-        print(corrupted_memory)        
         return corrupted_memory
     
 def multiplier_adder():
@@ -50,29 +46,21 @@ def multiplier_adder():
 
     corrupted_memory = create_memory()
 
-    print(1, corrupted_memory)
-
-    pattern = r'mul\(\d+,\d+\)'
+    extract_mul_pattern = r'mul\(\d+,\d+\)'
 
     for memory_string in corrupted_memory:
 
-        print(2, memory_string)
-
-        multipliers = re.findall(pattern, memory_string)
-        print(3, multipliers)
+        multipliers = re.findall(extract_mul_pattern, memory_string)
 
         for multiplier in multipliers:
-            print(4, multiplier)
 
-            pattern = r'mul\((\d+),(\d+)\)'
+            extract_digit_pattern = r'mul\((\d+),(\d+)\)'
 
-            digits = re.match(pattern, multiplier).groups()
+            digits = re.match(extract_digit_pattern, multiplier)
 
-            # print(digits)
-
-            total += int(digits[0]) * int(digits[1])
+            total += int(digits.group(1)) * int(digits.group(2))
 
     print(total)
     return total
 
-create_memory()
+multiplier_adder()
