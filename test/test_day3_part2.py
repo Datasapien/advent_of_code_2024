@@ -1,56 +1,64 @@
 import pytest
-from src.day3.day3_part1 import multiplier_adder
-from unittest.mock import patch
+from src.day3.day3_part2 import create_memory,extract_valid_memory_string, extract_valid_muls, calculate_total
+from unittest.mock import mock_open, patch
+import csv
+import unittest
 
-@patch("src.day3.day3_part1.create_memory")
-def test_returns_int(mock_create_memory):
+test_string = "mul(1,1)mul[1,1]don't()mul(2,2)mul[2,2]do()mul(3,3)mul[3,3]don't()mul(4,4)mul[4,4]do()mul(5,5)mul[5,5]don't()mul(6,6)mul[6,6]do()mul(7,7)mul[7,7]expect168"
 
-    mock_create_memory.return_value = ["mul(4,5)"]
+class TestCreateMemory():
+    @patch('builtins.open', new_callable=mock_open, read_data=test_string)
+    def test_create_memory_returns_list(self, mock_file):
+        # Call the function
+        result = create_memory()
 
-    result = multiplier_adder()
+        # Expected result based on mocked file data
+        expected = test_string
 
-    assert type(result) == int
+        # Check that the result matches the expected outcome
+        assert result == expected
 
-@patch("src.day3.day3_part1.create_memory")
-def test_returns_correct_value_for_single_mul(mock_create_memory):
+class TestExtractValidMemoryStrings():
+    @patch("src.day3.day3_part2.create_memory")
+    def test_extracts_valid_string(self, mock_create_memory):
+        mock_create_memory.return_value = test_string
 
-    mock_create_memory.return_value = ["mul(4,5)"]
+        result = extract_valid_memory_string()
 
-    result = multiplier_adder()
+        expected = "mul(1,1)mul[1,1]mul(3,3)mul[3,3]mul(5,5)mul[5,5]mul(7,7)mul[7,7]expect168"
+        
+        assert result == expected
 
-    expected = 20
+class TestExtractValidMuls():
+    @patch("src.day3.day3_part2.extract_valid_memory_string")
+    def test_extracts_valid_mul(self, mock_extract_valid_memory_string):
 
-    assert result == expected
+        mock_extract_valid_memory_string.return_value = "mul(1,1)mul[1,1]mul(3,3)mul[3,3]mul(5,5)mul[5,5]mul(7,7)mul[7,7]expect168"
 
-@patch("src.day3.day3_part1.create_memory")
-def test_returns_correct_value_for_multiple_mul(mock_create_memory):
+        result = extract_valid_muls()
 
-    mock_create_memory.return_value = ["mul(4,5)","mul(3,6)"]
+        expected = "mul(1,1)mul(3,3)mul(5,5)mul(7,7)"
+        
+        assert result == expected
 
-    result = multiplier_adder()
+class TestCalculateMuls():
 
-    expected = 38
+    @patch("src.day3.day3_part2.extract_valid_muls")
+    def test_returns_int(self,mock_create_memory):
 
-    assert result == expected
+        mock_create_memory.return_value = "mul(1,1)mul(3,3)mul(5,5)mul(7,7)"
 
-@patch("src.day3.day3_part1.create_memory")
-def test_returns_correct_value_for_single_corrupt_str(mock_create_memory):
+        result = calculate_total()
 
-    mock_create_memory.return_value = ["xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"]
+        assert type(result) == int
 
-    result = multiplier_adder()
+    @patch("src.day3.day3_part2.extract_valid_muls")
+    def test_returns_correct_value(self,mock_create_memory):
 
-    expected = 161
+        mock_create_memory.return_value = "mul(1,1)mul(3,3)mul(5,5)mul(7,7)"
 
-    assert result == expected
+        result = calculate_total()
 
-@patch("src.day3.day3_part1.create_memory")
-def test_returns_correct_value_for_two_corrupt_strs(mock_create_memory):
+        expected = 84
 
-    mock_create_memory.return_value = ["xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))", "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"]
-
-    result = multiplier_adder()
-
-    expected = 322
-
-    assert result == expected
+        assert result == expected

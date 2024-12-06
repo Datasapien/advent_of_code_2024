@@ -1,5 +1,6 @@
 import csv
 import re
+from pprint import pprint
 
 """
 Search day3_input for sequence mul(X,Y) where X and Y are integers
@@ -16,7 +17,7 @@ Only the most recent do() or don't() instruction applies. At the beginning of th
 
 Given following string:
 
-    xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
+xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
 
 There are only TWO valid sequences:
     mul(2,4)
@@ -30,41 +31,73 @@ Calculate the total from day3_input.csv
 
 def create_memory():
 
-    csv_file = 'data/day3_input.csv'
+    txt_file = 'data/day3_input.txt'
 
-    with open(csv_file, 'r') as file:
-        string = csv.reader(file, delimiter = ' ')
+    with open(txt_file, 'r') as file:
+        corrupted_memory = file.read().replace('\n', '').replace(' ', '')
 
-        corrupted_memory = []
-
-        for row in string:
-            
-            for item in row:
-                corrupted_memory.append(item)
-
-        return corrupted_memory
+    print(corrupted_memory)
+    return corrupted_memory
     
-def multiplier_adder():
-    
-    total = 0
+def extract_valid_memory_string():
 
     corrupted_memory = create_memory()
 
+    valid_memory_string = ""
+
+    # Pattern to match numbers before first "don't()"
+    first_section = re.match(r'^(.*?)don\'t\(\)', corrupted_memory)
+    
+    # Pattern to match numbers between "do()" and "don't()"
+    between_sections = re.findall(r'do\(\)(.*?)don\'t\(\)', corrupted_memory)
+    
+    # Pattern to match numbers after final "do()"
+    last_section = re.search(r'do\(\)([^\']+)$', corrupted_memory)    
+
+    if first_section:
+        valid_memory_string += first_section.group(1)
+
+    if between_sections:
+        for item in between_sections:   
+            valid_memory_string += item
+    
+    if last_section:
+        valid_memory_string += last_section.group(1)
+
+    return valid_memory_string
+
+def extract_valid_muls():
+
     extract_mul_pattern = r'mul\(\d+,\d+\)'
 
-    for memory_string in corrupted_memory:
+    multipliers = ""
 
-        multipliers = re.findall(extract_mul_pattern, memory_string)
+    valid_memory_strings = extract_valid_memory_string()
 
-        for multiplier in multipliers:
+    valid_multipliers = re.findall(extract_mul_pattern, valid_memory_strings)
 
-            extract_digit_pattern = r'mul\((\d+),(\d+)\)'
+    for multiplier in valid_multipliers:
 
-            digits = re.match(extract_digit_pattern, multiplier)
+        multipliers += multiplier
 
-            total += int(digits.group(1)) * int(digits.group(2))
+    return multipliers
+
+def calculate_total():
+    
+    total = 0
+
+    valid_muls = extract_valid_muls()
+
+    extract_digit_pattern = r'mul\((\d+),(\d+)\)'
+
+    matches = re.findall(extract_digit_pattern, valid_muls)
+
+    pairs = [[int(a), int(b)] for a, b in matches]
+
+    for pair in pairs:
+        total += pair[0] * pair[1]
 
     print(total)
     return total
 
-multiplier_adder()
+calculate_total()
