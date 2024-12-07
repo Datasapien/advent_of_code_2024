@@ -34,9 +34,8 @@ def create_memory():
     txt_file = 'data/day3_input.txt'
 
     with open(txt_file, 'r') as file:
-        corrupted_memory = file.read().replace('\n', '').replace(' ', '')
+        corrupted_memory = file.read()
 
-    print(corrupted_memory)
     return corrupted_memory
     
 def extract_valid_memory_string():
@@ -101,3 +100,8 @@ def calculate_total():
     return total
 
 calculate_total()
+
+
+# Numbers tried:
+# 90650125
+# 78147520
