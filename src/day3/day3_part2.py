@@ -17,7 +17,9 @@ Only the most recent do() or don't() instruction applies. At the beginning of th
 
 Given following string:
 
-xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
+xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))=48
+
+mul(1,1)mul[1,1]don't()mul(2,2)mul[2,2]do()mul(3,3)mul[3,3]don't()mul(4,4)mul[4,4]do()mul(5,5)mul[5,5]don't()mul(6,6)mul[6,6]do()mul(7,7)mul[7,7]=84
 
 There are only TWO valid sequences:
     mul(2,4)
@@ -34,7 +36,7 @@ def create_memory():
     txt_file = 'data/day3_input.txt'
 
     with open(txt_file, 'r') as file:
-        corrupted_memory = file.read()
+        corrupted_memory = ''.join(line.strip() for line in file)
 
     return corrupted_memory
     
@@ -44,14 +46,20 @@ def extract_valid_memory_string():
 
     valid_memory_string = ""
 
-    # Pattern to match numbers before first "don't()"
-    first_section = re.match(r'^(.*?)don\'t\(\)', corrupted_memory)
-    
-    # Pattern to match numbers between "do()" and "don't()"
-    between_sections = re.findall(r'do\(\)(.*?)don\'t\(\)', corrupted_memory)
-    
-    # Pattern to match numbers after final "do()"
-    last_section = re.search(r'do\(\)([^\']+)$', corrupted_memory)    
+    # To match numbers before first "don't()"
+    first_section = re.match(r"^(.*?)don't\(\)", corrupted_memory)
+
+    print(1, first_section.group(1))
+
+    # To match strings between "do()" and "don't() OR "do()" and "do()"
+    between_sections = re.findall(r"do\(\)(.*?)don't\(\)|do\(\)", corrupted_memory)
+
+    print(2, between_sections)
+
+    # To match numbers after final "do()"
+    last_section = re.search(r'do\(\)([^do]*?)$', corrupted_memory)   
+
+    print(3, last_section)
 
     if first_section:
         valid_memory_string += first_section.group(1)
@@ -91,7 +99,11 @@ def calculate_total():
 
     matches = re.findall(extract_digit_pattern, valid_muls)
 
+    print(matches)
+
     pairs = [[int(a), int(b)] for a, b in matches]
+
+    pprint(pairs)
 
     for pair in pairs:
         total += pair[0] * pair[1]
@@ -101,7 +113,8 @@ def calculate_total():
 
 calculate_total()
 
-
 # Numbers tried:
-# 90650125
-# 78147520
+# 90650125 x
+# 89829571 x
+# 78147520 x
+# 71639165 x
