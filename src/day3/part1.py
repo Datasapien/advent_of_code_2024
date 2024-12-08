@@ -26,7 +26,7 @@ Calculate the total from day3_input.csv
 
 def create_memory():
 
-    csv_file = 'data/day3_input.csv'
+    csv_file = 'data/day3_input.txt'
 
     with open(csv_file, 'r') as file:
         string = csv.reader(file, delimiter = ' ')

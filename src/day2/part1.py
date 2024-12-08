@@ -27,7 +27,7 @@ Need to output the number of SAFE reports
 
 def create_reports():
 
-    csv_file = "data/test_input.csv"
+    csv_file = "data/day2_input.csv"
 
     with open(csv_file, 'r') as file:
         rows = [list(map(int, line.strip().split())) for line in file]

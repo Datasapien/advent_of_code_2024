@@ -1,6 +1,5 @@
 import csv
 import re
-from pprint import pprint
 
 """
 Search day3_input for sequence mul(X,Y) where X and Y are integers
@@ -44,32 +43,7 @@ def extract_valid_memory_string():
 
     corrupted_memory = create_memory()
 
-    valid_memory_string = ""
-
-    # To match numbers before first "don't()"
-    first_section = re.match(r"^(.*?)don't\(\)", corrupted_memory)
-
-    print(1, first_section.group(1))
-
-    # To match strings between "do()" and "don't() OR "do()" and "do()"
-    between_sections = re.findall(r"do\(\)(.*?)don't\(\)|do\(\)", corrupted_memory)
-
-    print(2, between_sections)
-
-    # To match numbers after final "do()"
-    last_section = re.search(r'do\(\)([^do]*?)$', corrupted_memory)   
-
-    print(3, last_section)
-
-    if first_section:
-        valid_memory_string += first_section.group(1)
-
-    if between_sections:
-        for item in between_sections:   
-            valid_memory_string += item
-    
-    if last_section:
-        valid_memory_string += last_section.group(1)
+    valid_memory_string = re.sub(r"don't\(\).*?(?=do\(\)|$)", "", corrupted_memory)
 
     return valid_memory_string
 
@@ -99,11 +73,7 @@ def calculate_total():
 
     matches = re.findall(extract_digit_pattern, valid_muls)
 
-    print(matches)
-
     pairs = [[int(a), int(b)] for a, b in matches]
-
-    pprint(pairs)
 
     for pair in pairs:
         total += pair[0] * pair[1]
@@ -112,9 +82,3 @@ def calculate_total():
     return total
 
 calculate_total()
-
-# Numbers tried:
-# 90650125 x
-# 89829571 x
-# 78147520 x
-# 71639165 x

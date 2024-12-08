@@ -1,5 +1,5 @@
 import pytest
-from src.day3.day3_part2 import create_memory,extract_valid_memory_string, extract_valid_muls, calculate_total
+from src.day3.part2 import create_memory,extract_valid_memory_string, extract_valid_muls, calculate_total
 from unittest.mock import mock_open, patch
 import csv
 import unittest
@@ -8,7 +8,7 @@ test_string = "mul(1,1)mul[1,1]don't()mul(2,2)mul[2,2]do()mul(3,3)mul[3,3]don't(
 
 class TestCreateMemory():
     @patch('builtins.open', new_callable=mock_open, read_data=test_string)
-    def test_create_memory_returns_list(self, mock_file):
+    def test_create_memory_returns_string(self, mock_file):
         # Call the function
         result = create_memory()
 
@@ -19,18 +19,18 @@ class TestCreateMemory():
         assert result == expected
 
 class TestExtractValidMemoryStrings():
-    @patch("src.day3.day3_part2.create_memory")
+    @patch("src.day3.part2.create_memory")
     def test_extracts_valid_string(self, mock_create_memory):
         mock_create_memory.return_value = test_string
 
         result = extract_valid_memory_string()
 
-        expected = "mul(1,1)mul[1,1]mul(3,3)mul[3,3]mul(5,5)mul[5,5]mul(7,7)mul[7,7]expect168"
+        expected = 'mul(1,1)mul[1,1]do()mul(3,3)mul[3,3]do()mul(5,5)mul[5,5]do()mul(7,7)mul[7,7]expect168'
         
         assert result == expected
 
 class TestExtractValidMuls():
-    @patch("src.day3.day3_part2.extract_valid_memory_string")
+    @patch("src.day3.part2.extract_valid_memory_string")
     def test_extracts_valid_mul(self, mock_extract_valid_memory_string):
 
         mock_extract_valid_memory_string.return_value = "mul(1,1)mul[1,1]mul(3,3)mul[3,3]mul(5,5)mul[5,5]mul(7,7)mul[7,7]expect168"
@@ -43,7 +43,7 @@ class TestExtractValidMuls():
 
 class TestCalculateMuls():
 
-    @patch("src.day3.day3_part2.extract_valid_muls")
+    @patch("src.day3.part2.extract_valid_muls")
     def test_returns_int(self,mock_create_memory):
 
         mock_create_memory.return_value = "mul(1,1)mul(3,3)mul(5,5)mul(7,7)"
@@ -52,7 +52,7 @@ class TestCalculateMuls():
 
         assert type(result) == int
 
-    @patch("src.day3.day3_part2.extract_valid_muls")
+    @patch("src.day3.part2.extract_valid_muls")
     def test_returns_correct_value(self,mock_create_memory):
 
         mock_create_memory.return_value = "mul(1,1)mul(3,3)mul(5,5)mul(7,7)"
